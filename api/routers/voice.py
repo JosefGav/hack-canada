@@ -12,7 +12,7 @@ import google.generativeai as genai
 router = APIRouter()
 
 genai.configure(api_key=settings.gemini_api_key)
-gemini_model = genai.GenerativeModel("gemini-2.0-flash")
+gemini_model = genai.GenerativeModel("gemini-2.5-flash")
 
 @router.post("/voice/token", response_model=VoiceTokenResponse)
 async def get_voice_token():

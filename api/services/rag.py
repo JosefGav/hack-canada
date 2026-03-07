@@ -4,7 +4,7 @@ from api.config import settings
 from api.services.retrieval import SectionResult
 
 genai.configure(api_key=settings.gemini_api_key)
-model = genai.GenerativeModel("gemini-2.0-flash")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 SYSTEM_PROMPT = """You are a legal research assistant analyzing Canadian federal statutes and regulations.
 
