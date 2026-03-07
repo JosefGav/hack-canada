@@ -73,8 +73,9 @@ async def hybrid_search(
     law_code: str | None = None,
 ) -> list[SectionResult]:
     query_embedding = embed_query(query)
+    embedding_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
     rows = await pool.fetch(
         HYBRID_SEARCH_SQL,
-        query_embedding, language, law_code, query, top_k
+        embedding_str, language, law_code, query, top_k
     )
     return [SectionResult(**dict(row)) for row in rows]
