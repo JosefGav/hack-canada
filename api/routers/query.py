@@ -22,7 +22,11 @@ async def query(req: QueryRequest):
     if not sections:
         return {"answer": None, "reason": "NO_RESULTS", "citations": [], "confidence": "low"}
 
-    result = await generate_response(req.query, sections)
+    try:
+        result = await generate_response(req.query, sections)
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=f"Gemini API error: {str(e)}")
+
     result["retrieved_sections"] = [
         {"lims_id": s.lims_id, "label": s.label, "law_code": s.law_code, "score": s.combined_score}
         for s in sections
@@ -40,7 +44,10 @@ async def query_stream(req: QueryRequest):
         return EventSourceResponse(empty())
 
     async def event_generator():
-        async for event in generate_response_stream(req.query, sections):
-            yield {"event": "message", "data": json.dumps(event)}
+        try:
+            async for event in generate_response_stream(req.query, sections):
+                yield {"event": "message", "data": json.dumps(event)}
+        except Exception as e:
+            yield {"event": "error", "data": json.dumps({"detail": f"Gemini API error: {str(e)}"})}
 
     return EventSourceResponse(event_generator())

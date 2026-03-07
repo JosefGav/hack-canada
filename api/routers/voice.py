@@ -38,12 +38,16 @@ async def voice_llm(request: Request):
 
     # ElevenLabs expects OpenAI-compatible SSE format
     async def generate():
-        response = gemini_model.generate_content(prompt, stream=True)
-        for chunk in response:
-            if chunk.text:
-                # OpenAI SSE format for compatibility with ElevenLabs
-                data = {"choices": [{"delta": {"content": chunk.text}}]}
-                yield f"data: {json.dumps(data)}\n\n"
-        yield "data: [DONE]\n\n"
+        try:
+            response = gemini_model.generate_content(prompt, stream=True)
+            for chunk in response:
+                if chunk.text:
+                    # OpenAI SSE format for compatibility with ElevenLabs
+                    data = {"choices": [{"delta": {"content": chunk.text}}]}
+                    yield f"data: {json.dumps(data)}\n\n"
+            yield "data: [DONE]\n\n"
+        except Exception as e:
+            yield f"data: {json.dumps({'error': f'Gemini API error: {str(e)}'})}\n\n"
+            yield "data: [DONE]\n\n"
 
     return StreamingResponse(generate(), media_type="text/event-stream")
