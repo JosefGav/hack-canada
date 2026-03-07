@@ -1,20 +1,14 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
 from sse_starlette.sse import EventSourceResponse
 from api.db import get_pool
 from api.services.retrieval import hybrid_search
 from api.services.rag import generate_response, generate_response_stream
+from api.models.schemas import QueryRequest, QueryResponse
 import json
 
 router = APIRouter()
 
-class QueryRequest(BaseModel):
-    query: str
-    language: str = "en"
-    law_code: str | None = None
-    conversation_id: str | None = None
-
-@router.post("/query")
+@router.post("/query", response_model=QueryResponse)
 async def query(req: QueryRequest):
     pool = get_pool()
     sections = await hybrid_search(req.query, pool, top_k=5, language=req.language, law_code=req.law_code)
@@ -40,7 +34,10 @@ async def query_stream(req: QueryRequest):
 
     if not sections:
         async def empty():
-            yield {"event": "message", "data": json.dumps({"type": "done", "data": {"answer": None}})}
+            yield {"event": "message", "data": json.dumps({
+                "type": "done",
+                "data": {"answer": None, "reason": "NO_RESULTS", "citations": [], "confidence": "low"}
+            })}
         return EventSourceResponse(empty())
 
     async def event_generator():

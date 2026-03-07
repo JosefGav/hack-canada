@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException
 from api.db import get_pool
+from api.models.schemas import LawSummarySchema, LawDetailSchema
+from typing import List
 
 router = APIRouter()
 
-@router.get("/laws")
+@router.get("/laws", response_model=List[LawSummarySchema])
 async def list_laws():
     pool = get_pool()
     rows = await pool.fetch("""
@@ -14,7 +16,7 @@ async def list_laws():
     """)
     return [dict(row) for row in rows]
 
-@router.get("/laws/{code}")
+@router.get("/laws/{code}", response_model=LawDetailSchema)
 async def get_law(code: str):
     pool = get_pool()
     law = await pool.fetchrow("SELECT * FROM laws WHERE code = $1", code)

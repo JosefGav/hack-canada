@@ -46,7 +46,10 @@ USER QUESTION: {query}"""
 
 async def generate_response(query: str, sections: list[SectionResult]) -> dict:
     prompt = build_prompt(query, sections)
-    response = model.generate_content(prompt)
+    response = model.generate_content(
+        prompt, 
+        generation_config={"response_mime_type": "application/json"}
+    )
     raw = response.text.strip()
 
     if raw.startswith("```"):
@@ -72,7 +75,11 @@ async def generate_response(query: str, sections: list[SectionResult]) -> dict:
 
 async def generate_response_stream(query: str, sections: list[SectionResult]):
     prompt = build_prompt(query, sections)
-    response = model.generate_content(prompt, stream=True)
+    response = model.generate_content(
+        prompt, 
+        stream=True, 
+        generation_config={"response_mime_type": "application/json"}
+    )
     full_text = ""
     for chunk in response:
         if chunk.text:

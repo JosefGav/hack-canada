@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 from api.db import get_pool
+from api.models.schemas import GraphResponse
 
 router = APIRouter()
 
-@router.get("/graph/{code}")
+@router.get("/graph/{code}", response_model=GraphResponse)
 async def get_graph(code: str):
     pool = get_pool()
     # Get all cross-references from sections of this law

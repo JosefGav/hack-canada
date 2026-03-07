@@ -24,6 +24,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.responses import JSONResponse
+import asyncpg
+
+@app.exception_handler(asyncpg.exceptions.PostgresError)
+async def postgres_error_handler(request, exc):
+    return JSONResponse(status_code=503, content={"detail": f"Database error: {str(exc)}"})
+
 # Import routers
 from api.routers import query, laws, sections, graph, voice, conversations
 app.include_router(query.router, prefix="/api")
