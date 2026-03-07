@@ -1,0 +1,46 @@
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from sse_starlette.sse import EventSourceResponse
+from api.db import get_pool
+from api.services.retrieval import hybrid_search
+from api.services.rag import generate_response, generate_response_stream
+import json
+
+router = APIRouter()
+
+class QueryRequest(BaseModel):
+    query: str
+    language: str = "en"
+    law_code: str | None = None
+    conversation_id: str | None = None
+
+@router.post("/query")
+async def query(req: QueryRequest):
+    pool = get_pool()
+    sections = await hybrid_search(req.query, pool, top_k=5, language=req.language, law_code=req.law_code)
+
+    if not sections:
+        return {"answer": None, "reason": "NO_RESULTS", "citations": [], "confidence": "low"}
+
+    result = await generate_response(req.query, sections)
+    result["retrieved_sections"] = [
+        {"lims_id": s.lims_id, "label": s.label, "law_code": s.law_code, "score": s.combined_score}
+        for s in sections
+    ]
+    return result
+
+@router.post("/query/stream")
+async def query_stream(req: QueryRequest):
+    pool = get_pool()
+    sections = await hybrid_search(req.query, pool, top_k=5, language=req.language, law_code=req.law_code)
+
+    if not sections:
+        async def empty():
+            yield {"event": "message", "data": json.dumps({"type": "done", "data": {"answer": None}})}
+        return EventSourceResponse(empty())
+
+    async def event_generator():
+        async for event in generate_response_stream(req.query, sections):
+            yield {"event": "message", "data": json.dumps(event)}
+
+    return EventSourceResponse(event_generator())
