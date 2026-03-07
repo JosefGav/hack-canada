@@ -1,3 +1,4 @@
+import React from 'react'
 import { useAuditorStore } from '../../stores/auditorStore'
 
 export default function CitationBadge({ citation, inline = false }) {

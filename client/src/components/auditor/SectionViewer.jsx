@@ -1,3 +1,5 @@
+import React from 'react'
+
 export default function SectionViewer({ section }) {
   return (
     <div className="flex-1 overflow-y-auto p-6">
@@ -22,18 +24,18 @@ export default function SectionViewer({ section }) {
       </div>
 
       <div className="text-sm leading-relaxed whitespace-pre-wrap mb-6"
-           style={{ color: 'var(--text-primary)' }}>
+        style={{ color: 'var(--text-primary)' }}>
         {section.content_text}
       </div>
 
       {section.content_xml && (
         <details className="mt-4">
           <summary className="text-xs cursor-pointer"
-                   style={{ color: 'var(--gold-dim)' }}>
+            style={{ color: 'var(--gold-dim)' }}>
             View Raw XML
           </summary>
           <pre className="mt-2 p-3 rounded text-xs overflow-x-auto mono"
-               style={{ background: 'var(--navy)', color: 'var(--text-secondary)' }}>
+            style={{ background: 'var(--navy)', color: 'var(--text-secondary)' }}>
             {section.content_xml}
           </pre>
         </details>

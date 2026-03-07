@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import CitationBadge from './CitationBadge'
 
@@ -31,7 +31,7 @@ export default function MessageBubble({ message }) {
 
         {!isUser && (
           <div className="flex items-center justify-between mt-3 pt-2 border-t"
-               style={{ borderColor: 'var(--navy-lighter)' }}>
+            style={{ borderColor: 'var(--navy-lighter)' }}>
             <div className="flex flex-wrap gap-1.5 overflow-hidden">
               {message.citations?.map((c, i) => (
                 <CitationBadge key={i} citation={c} />

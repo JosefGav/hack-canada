@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useChatStore } from '../../stores/chatStore'
 import MessageBubble from './MessageBubble'
 import QueryInput from './QueryInput'
@@ -32,7 +32,7 @@ export default function ChatPane() {
         {isLoading && streamingContent && (
           <div className="flex justify-start">
             <div className="max-w-[85%] rounded-lg px-4 py-3 text-sm leading-relaxed"
-                 style={{ background: 'var(--navy-light)', borderLeft: '3px solid var(--gold-dim)' }}>
+              style={{ background: 'var(--navy-light)', borderLeft: '3px solid var(--gold-dim)' }}>
               <div className="whitespace-pre-wrap">{streamingContent}</div>
             </div>
           </div>

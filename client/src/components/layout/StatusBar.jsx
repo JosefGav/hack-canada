@@ -1,3 +1,4 @@
+import React from 'react'
 import { useChatStore } from '../../stores/chatStore'
 
 export default function StatusBar() {
@@ -15,7 +16,7 @@ export default function StatusBar() {
 
   return (
     <div className="flex items-center justify-between px-6 py-2 text-xs border-t"
-         style={{ borderColor: 'var(--navy-lighter)', color: 'var(--text-secondary)' }}>
+      style={{ borderColor: 'var(--navy-lighter)', color: 'var(--text-secondary)' }}>
       <div className="flex items-center gap-4">
         {confidence && (
           <span>

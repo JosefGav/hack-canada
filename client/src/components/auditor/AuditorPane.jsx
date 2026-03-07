@@ -1,3 +1,4 @@
+import React from 'react'
 import { useAuditorStore } from '../../stores/auditorStore'
 import SectionViewer from './SectionViewer'
 import LegalGraph from './LegalGraph'

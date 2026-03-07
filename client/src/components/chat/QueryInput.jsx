@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useChatStore } from '../../stores/chatStore'
 
 export default function QueryInput() {
@@ -11,7 +11,7 @@ export default function QueryInput() {
     fetch('/api/laws')
       .then(r => r.json())
       .then(data => setLaws(data))
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   const handleSubmit = (e) => {

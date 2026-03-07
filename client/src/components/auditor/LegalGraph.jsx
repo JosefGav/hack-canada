@@ -1,3 +1,4 @@
+import React from 'react'
 import ReactFlow, { Background, Controls } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -38,7 +39,7 @@ export default function LegalGraph() {
         <Controls />
       </ReactFlow>
       <div className="absolute top-4 left-4 p-3 rounded-lg border text-xs"
-           style={{ background: 'rgba(19, 34, 64, 0.8)', borderColor: 'var(--navy-lighter)', color: 'var(--text-secondary)' }}>
+        style={{ background: 'rgba(19, 34, 64, 0.8)', borderColor: 'var(--navy-lighter)', color: 'var(--text-secondary)' }}>
         <p className="mb-1 uppercase tracking-wider text-[10px]" style={{ color: 'var(--gold-dim)' }}>Prototype Graph</p>
         <p>Statutory cross-references</p>
       </div>
