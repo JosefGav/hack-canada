@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import Any, List, Optional
+from datetime import date
 
 # --- Query ---
 class QueryRequest(BaseModel):
@@ -33,7 +34,7 @@ class LawSummarySchema(BaseModel):
     code: str
     short_title_en: str
     type: str
-    last_amended: Optional[str] = None
+    last_amended: Optional[date] = None
     section_count: int
 
 class LawDetailSchema(BaseModel):
