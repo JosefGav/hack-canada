@@ -10,6 +10,9 @@ export const useChatStore = create((set, get) => ({
   streamingContent: '',
   isAudioPlaying: false,
   audioPlaybackId: 0,
+  selectedVoiceId: null,
+
+  setSelectedVoiceId: (voiceId) => set({ selectedVoiceId: voiceId }),
 
   addMessage: (msg) => set(state => ({
     messages: [...state.messages, { ...msg, id: Date.now() }]
@@ -45,7 +48,7 @@ export const useChatStore = create((set, get) => ({
       const res = await fetch('/api/voice/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ text, voice_id: get().selectedVoiceId }),
       })
 
       if (!res.ok) throw new Error(`TTS request failed: ${res.status}`)
@@ -95,7 +98,7 @@ export const useChatStore = create((set, get) => ({
     // Unlock browser audio context synchronously on user click
     // Uses a separate element so it can't interfere with real playback
     _unlockAudio.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA"
-    _unlockAudio.play().catch(() => {})
+    _unlockAudio.play().catch(() => { })
 
     addMessage({ role: 'user', content: query })
     setLoading(true)
@@ -138,7 +141,7 @@ export const useChatStore = create((set, get) => ({
             } else if (event.type === 'confidence') {
               confidence = event.data || 'low'
             }
-          } catch {}
+          } catch { }
         }
       }
 
@@ -153,7 +156,7 @@ export const useChatStore = create((set, get) => ({
         if (parsed.confidence) {
           confidence = parsed.confidence
         }
-      } catch {}
+      } catch { }
 
       setStreamingContent('')
 

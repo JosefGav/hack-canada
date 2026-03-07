@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ChatPane from '../chat/ChatPane'
 import AuditorPane from '../auditor/AuditorPane'
 import StatusBar from './StatusBar'
@@ -6,7 +6,28 @@ import { useChatStore } from '../../stores/chatStore'
 
 export default function AppShell() {
   const [activeTab, setActiveTab] = useState('source')
-  const { isAudioPlaying, stopAudio } = useChatStore()
+  const { isAudioPlaying, stopAudio, setSelectedVoiceId } = useChatStore()
+  const [presets, setPresets] = useState([])
+  const [activePreset, setActivePreset] = useState('')
+
+  useEffect(() => {
+    fetch('/api/voice/presets')
+      .then(r => r.json())
+      .then(data => {
+        setPresets(data.presets || [])
+        if (data.presets?.length) {
+          setActivePreset(data.presets[0].id)
+          setSelectedVoiceId(data.presets[0].voice_id)
+        }
+      })
+      .catch(() => { })
+  }, [])
+
+  const handlePresetChange = (presetId) => {
+    setActivePreset(presetId)
+    const preset = presets.find(p => p.id === presetId)
+    if (preset) setSelectedVoiceId(preset.voice_id)
+  }
 
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--navy)' }}>
@@ -37,6 +58,30 @@ export default function AppShell() {
             </button>
           )}
         </div>
+
+        {/* Voice Preset Selector */}
+        {presets.length > 0 && (
+          <div className="flex items-center gap-2">
+            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>Counsel:</span>
+            <div className="flex gap-1">
+              {presets.map(p => (
+                <button
+                  key={p.id}
+                  onClick={() => handlePresetChange(p.id)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200"
+                  style={{
+                    background: activePreset === p.id ? 'rgba(201, 168, 76, 0.15)' : 'transparent',
+                    color: activePreset === p.id ? 'var(--gold)' : 'var(--text-secondary)',
+                    border: `1px solid ${activePreset === p.id ? 'var(--gold-dim)' : 'var(--navy-lighter)'}`,
+                  }}
+                  title={p.description}
+                >
+                  {p.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </header>
 
       <div className="flex flex-1 overflow-hidden">

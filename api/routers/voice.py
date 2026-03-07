@@ -25,6 +25,35 @@ if settings.GEMINI_API_KEY:
     genai.configure(api_key=settings.GEMINI_API_KEY)
     gemini_model = genai.GenerativeModel("gemini-2.5-flash")
 
+# ── Lawyer Voice Presets ──────────────────────────────────────────────
+VOICE_PRESETS = [
+    {
+        "id": "assertive",
+        "name": "The Advocate",
+        "description": "Confident and direct — gets straight to the point",
+        "voice_id": settings.ELEVENLABS_VOICE_ID,  # your custom cloned voice
+    },
+    {
+        "id": "analytical",
+        "name": "The Scholar",
+        "description": "Calm and precise — methodical legal analysis",
+        "voice_id": "TBt8U1ufDfjfOcYYUUrU",  # custom voice
+    },
+    {
+        "id": "empathetic",
+        "name": "The Counselor",
+        "description": "Warm and approachable — explains in plain language",
+        "voice_id": "ErXwobaYiN019PkySvjV",  # ElevenLabs "Antoni"
+    },
+]
+
+
+@router.get("/presets")
+async def get_voice_presets():
+    """Return available lawyer voice presets."""
+    return {"presets": VOICE_PRESETS}
+
+
 class TTSRequest(BaseModel):
     text: str
     voice_id: str | None = None
