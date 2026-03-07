@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import ChatPane from '../chat/ChatPane'
 import AuditorPane from '../auditor/AuditorPane'
 import StatusBar from './StatusBar'
@@ -11,7 +11,7 @@ export default function AppShell() {
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--navy)' }}>
       <header className="flex items-center justify-between px-6 py-3 border-b"
-              style={{ borderColor: 'var(--navy-lighter)' }}>
+        style={{ borderColor: 'var(--navy-lighter)' }}>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-semibold" style={{ color: 'var(--gold)' }}>
@@ -21,7 +21,7 @@ export default function AppShell() {
               Canadian Federal Law
             </span>
           </div>
-          
+
           {isAudioPlaying && (
             <button
               onClick={stopAudio}
@@ -41,7 +41,7 @@ export default function AppShell() {
 
       <div className="flex flex-1 overflow-hidden">
         <div className="w-2/5 border-r flex flex-col"
-             style={{ borderColor: 'var(--navy-lighter)' }}>
+          style={{ borderColor: 'var(--navy-lighter)' }}>
           <ChatPane />
         </div>
 

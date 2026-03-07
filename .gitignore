@@ -21,8 +21,10 @@ laws-lois-xml/
 # Node
 node_modules/
 .next/
+.vite/
 client/node_modules/
 client/dist/
+client/.vite/
 
 # IDE
 .vscode/
