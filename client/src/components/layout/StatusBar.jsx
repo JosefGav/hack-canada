@@ -31,9 +31,6 @@ export default function StatusBar() {
           <span>{citationCount} section{citationCount !== 1 ? 's' : ''} cited</span>
         )}
       </div>
-      <span className="font-medium tracking-wide" style={{ color: 'var(--gold-dim)', opacity: 0.8 }}>
-        Powered by Gemini and Groq + Canadian Federal Law XML
-      </span>
     </div>
   )
 }
