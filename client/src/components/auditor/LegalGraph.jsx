@@ -114,11 +114,6 @@ export default function LegalGraph() {
         <Background color="#e0d3cc" gap={16} />
         <Controls />
       </ReactFlow>
-      <div className="absolute top-4 left-4 p-3 rounded-lg border text-xs backdrop-blur z-10"
-        style={{ background: '#fff', borderColor: 'var(--navy-lighter)', color: 'var(--text-secondary)' }}>
-        <p className="mb-1 uppercase tracking-wider text-[10px]" style={{ color: 'var(--gold-dim)' }}>Live RAG Graph</p>
-        <p>Retrieval-Augmented Generation Trace</p>
-      </div>
     </div>
   )
 }
