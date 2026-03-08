@@ -36,7 +36,7 @@ export default function LandingPage({ onEnter }) {
             color: '#C45B5B',
           }}
         >
-          StatuteLens
+          SpecterBot
         </h1>
 
         <p className="text-lg tracking-wide" style={{ color: '#3a3a3a' }}>

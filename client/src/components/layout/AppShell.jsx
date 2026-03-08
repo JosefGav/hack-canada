@@ -63,13 +63,13 @@ export default function AppShell({ onBack }) {
         }}
       />
 
-      <header className="flex items-center justify-between px-6 py-3 relative z-10">
+      <header className="flex items-center justify-between px-6 py-3 relative z-10" style={{ minHeight: '48px' }}>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <h1 onClick={onBack} className="text-xl font-semibold cursor-pointer hover:opacity-80 transition-opacity" style={{ color: 'var(--gold)' }}>
-              StatuteLens
+          <div className="flex items-baseline gap-3">
+            <h1 onClick={onBack} className="text-xl font-semibold cursor-pointer hover:opacity-80 transition-opacity leading-none" style={{ color: 'var(--gold)' }}>
+              SpecterBot
             </h1>
-            <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <span className="text-sm leading-none" style={{ color: 'var(--text-secondary)' }}>
               Canadian Federal Law
             </span>
           </div>
