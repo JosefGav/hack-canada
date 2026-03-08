@@ -30,7 +30,6 @@ export default function QueryInput() {
 
   return (
     <form onSubmit={handleSubmit} className="p-4 border-t relative" style={{ borderColor: 'var(--navy-lighter)' }}>
-      {/* Subtle top border glow for the search area */}
       <div className="absolute top-0 left-0 right-0 h-[1px]"
         style={{ background: 'linear-gradient(90deg, transparent, var(--navy-lighter), transparent)' }} />
       <div className="flex gap-3" onClick={e => e.stopPropagation()}>
@@ -40,7 +39,7 @@ export default function QueryInput() {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="px-3 py-2.5 rounded-lg text-sm text-left outline-none flex items-center justify-between"
             style={{
-              background: 'var(--navy-lighter)',
+              background: '#fff',
               color: 'var(--text-primary)',
               border: `1px solid ${isDropdownOpen ? 'var(--gold-dim)' : 'var(--navy-lighter)'}`,
               minWidth: '180px',
@@ -61,7 +60,7 @@ export default function QueryInput() {
           {isDropdownOpen && (
             <div className="absolute bottom-[calc(100%+8px)] left-0 w-[300px] rounded-lg shadow-xl border overflow-hidden flex flex-col z-50"
               style={{
-                background: 'var(--navy)',
+                background: '#fff',
                 borderColor: 'var(--navy-lighter)',
                 maxHeight: '300px'
               }}
@@ -74,7 +73,7 @@ export default function QueryInput() {
                   onChange={e => setSearchQuery(e.target.value)}
                   className="w-full px-3 py-1.5 rounded text-sm outline-none"
                   style={{
-                    background: 'var(--navy)',
+                    background: '#fff',
                     color: 'var(--text-primary)',
                     border: '1px solid var(--navy-lighter)'
                   }}
@@ -90,9 +89,9 @@ export default function QueryInput() {
                     setIsDropdownOpen(false)
                     setSearchQuery('')
                   }}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-opacity-50 transition-colors"
+                  className="w-full text-left px-3 py-2 text-sm transition-colors"
                   style={{
-                    background: !lawCode ? 'rgba(196, 91, 91, 0.1)' : 'transparent',
+                    background: !lawCode ? 'rgba(196, 91, 91, 0.08)' : 'transparent',
                     color: !lawCode ? 'var(--gold)' : 'var(--text-primary)'
                   }}
                 >
@@ -112,9 +111,9 @@ export default function QueryInput() {
                         setIsDropdownOpen(false)
                         setSearchQuery('')
                       }}
-                      className="w-full text-left px-3 py-2 text-sm hover:bg-opacity-50 transition-colors truncate"
+                      className="w-full text-left px-3 py-2 text-sm transition-colors truncate"
                       style={{
-                        background: lawCode === law.code ? 'rgba(196, 91, 91, 0.1)' : 'transparent',
+                        background: lawCode === law.code ? 'rgba(196, 91, 91, 0.08)' : 'transparent',
                         color: lawCode === law.code ? 'var(--gold)' : 'var(--text-primary)'
                       }}
                       title={law.short_title_en}
@@ -138,29 +137,27 @@ export default function QueryInput() {
           disabled={isLoading}
           className="flex-1 px-4 py-2.5 rounded-lg text-sm outline-none transition-all duration-300"
           style={{
-            background: 'rgba(80, 54, 54, 0.4)', // Slightly transparent var(--navy-lighter)
+            background: '#fff',
             color: 'var(--text-primary)',
             border: '1px solid var(--navy-lighter)',
-            boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+            boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.04)'
           }}
           onFocus={e => {
             e.target.style.borderColor = 'var(--gold-dim)'
-            e.target.style.background = 'rgba(80, 54, 54, 0.6)'
-            e.target.style.boxShadow = '0 0 0 1px var(--gold-dim), inset 0 2px 4px rgba(0,0,0,0.1)'
+            e.target.style.boxShadow = '0 0 0 1px var(--gold-dim), inset 0 1px 2px rgba(0,0,0,0.04)'
           }}
           onBlur={e => {
             e.target.style.borderColor = 'var(--navy-lighter)'
-            e.target.style.background = 'rgba(80, 54, 54, 0.4)'
-            e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.1)'
+            e.target.style.boxShadow = 'inset 0 1px 2px rgba(0,0,0,0.04)'
           }}
         />
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-lg flex items-center gap-2 ${input.trim() ? 'hover:-translate-y-0.5 hover:shadow-xl' : ''}`}
+          className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md flex items-center gap-2 ${input.trim() ? 'hover:-translate-y-0.5 hover:shadow-lg' : ''}`}
           style={{
-            background: input.trim() ? 'linear-gradient(135deg, var(--gold), var(--gold-dim))' : 'var(--navy-lighter)',
-            color: input.trim() ? '#2B1A1A' : 'var(--text-secondary)',
+            background: input.trim() ? 'linear-gradient(135deg, #C45B5B, #D4817E)' : 'var(--navy-lighter)',
+            color: input.trim() ? '#fff' : 'var(--text-secondary)',
             border: `1px solid ${input.trim() ? 'transparent' : 'var(--navy-lighter)'}`,
             opacity: isLoading ? 0.7 : 1
           }}

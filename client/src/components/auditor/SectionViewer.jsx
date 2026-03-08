@@ -27,7 +27,7 @@ export default function SectionViewer({ section }) {
       <div className="relative mb-6 p-3 -mx-3 rounded z-0" style={{ color: 'var(--text-primary)' }}>
         <motion.div
           key={`bg-${section.lims_id}`}
-          initial={{ opacity: 0.4 }}
+          initial={{ opacity: 0.15 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute inset-0 rounded pointer-events-none -z-10"
@@ -45,7 +45,7 @@ export default function SectionViewer({ section }) {
             View Raw XML
           </summary>
           <pre className="mt-2 p-3 rounded text-xs overflow-x-auto mono"
-            style={{ background: 'var(--navy)', color: 'var(--text-secondary)' }}>
+            style={{ background: '#fff', color: 'var(--text-secondary)', border: '1px solid var(--navy-lighter)' }}>
             {section.content_xml}
           </pre>
         </details>

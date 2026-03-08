@@ -20,7 +20,7 @@ export default function CitationBadge({ citation, inline = false }) {
         ${citation.hallucinated ? 'opacity-50 line-through' : 'cursor-pointer'}
       `}
       style={{
-        background: citation.hallucinated ? 'var(--red)' : 'rgba(201, 168, 76, 0.15)',
+        background: citation.hallucinated ? 'var(--red)' : 'rgba(196, 91, 91, 0.1)',
         color: citation.hallucinated ? '#fff' : 'var(--gold)',
         border: `1px solid ${citation.hallucinated ? 'var(--red)' : 'var(--gold-dim)'}`,
       }}

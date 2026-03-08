@@ -25,8 +25,9 @@ export default function MessageBubble({ message }) {
       <div
         className="max-w-[85%] rounded-lg px-4 py-3 text-sm leading-relaxed"
         style={{
-          background: isUser ? 'var(--navy-lighter)' : 'var(--navy-light)',
+          background: isUser ? '#fff' : 'var(--navy-light)',
           borderLeft: isUser ? 'none' : '3px solid var(--gold-dim)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
         }}
       >
         <div className="whitespace-pre-wrap">
@@ -47,7 +48,7 @@ export default function MessageBubble({ message }) {
                 className="flex items-center gap-1.5 px-2 py-1 rounded text-xs transition-colors relative"
                 style={{
                   color: isPlayingThisMessage ? 'var(--gold)' : 'var(--text-secondary)',
-                  background: isPlayingThisMessage ? 'rgba(196, 91, 91, 0.1)' : 'rgba(255,255,255,0.05)'
+                  background: isPlayingThisMessage ? 'rgba(196, 91, 91, 0.1)' : 'rgba(0,0,0,0.03)'
                 }}
               >
                 {isPlayingThisMessage ? (
@@ -65,7 +66,7 @@ export default function MessageBubble({ message }) {
                 className="flex items-center gap-1.5 px-2 py-1 rounded text-xs transition-colors"
                 style={{
                   color: copied ? 'var(--green)' : 'var(--text-secondary)',
-                  background: 'rgba(255,255,255,0.05)'
+                  background: 'rgba(0,0,0,0.03)'
                 }}
               >
                 {copied ? 'Copied' : 'Copy Text'}

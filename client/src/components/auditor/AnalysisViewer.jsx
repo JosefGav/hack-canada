@@ -26,10 +26,10 @@ export default function AnalysisViewer() {
                     disabled={isAnalyzing}
                     className="px-4 py-2 rounded font-medium text-sm transition-all flex items-center gap-2"
                     style={{
-                        background: isAnalyzing ? 'var(--navy-lighter)' : 'var(--gold)',
-                        color: isAnalyzing ? 'var(--text-secondary)' : '#000',
+                        background: isAnalyzing ? 'var(--navy-lighter)' : 'linear-gradient(135deg, #C45B5B, #D4817E)',
+                        color: isAnalyzing ? 'var(--text-secondary)' : '#fff',
                         opacity: isAnalyzing ? 0.7 : 1,
-                        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.3)'
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                     }}
                 >
                     {isAnalyzing ? (
@@ -38,7 +38,7 @@ export default function AnalysisViewer() {
                             Translating...
                         </>
                     ) : (
-                        '✨ Translate to Plain English'
+                        'Translate to Plain English'
                     )}
                 </button>
             </div>
@@ -49,7 +49,7 @@ export default function AnalysisViewer() {
                     animate={{ opacity: 1, y: 0 }}
                     className="p-5 rounded-lg text-sm leading-relaxed"
                     style={{
-                        background: 'rgba(201, 168, 76, 0.05)',
+                        background: 'rgba(196, 91, 91, 0.05)',
                         border: '1px solid var(--gold-dim)',
                         color: 'var(--text-primary)'
                     }}
