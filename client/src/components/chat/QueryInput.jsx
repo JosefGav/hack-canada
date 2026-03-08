@@ -12,7 +12,7 @@ export default function QueryInput() {
   useEffect(() => {
     fetch('/api/laws')
       .then(r => r.json())
-      .then(data => setLaws(data))
+      .then(data => setLaws(Array.isArray(data) ? data : []))
       .catch(() => { })
 
     // Close dropdown when clicking outside
