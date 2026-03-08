@@ -31,21 +31,27 @@ VOICE_PRESETS = [
         "id": "assertive",
         "name": "The Advocate",
         "description": "Confident and direct — gets straight to the point",
-        "voice_id": settings.ELEVENLABS_VOICE_ID,  # your custom cloned voice
+        "voice_id": settings.ELEVENLABS_VOICE_ID,
+        "persona_prompt": "TONE: You are assertive and confident. Be direct and decisive. Use phrases like \"The law is clear on this...\" or \"Under the statute, there is no ambiguity...\" Keep explanations sharp and to the point. You project authority.",
     },
     {
         "id": "analytical",
         "name": "The Scholar",
         "description": "Calm and precise — methodical legal analysis",
-        "voice_id": "TBt8U1ufDfjfOcYYUUrU",  # custom voice
+        "voice_id": "TBt8U1ufDfjfOcYYUUrU",
+        "persona_prompt": "TONE: You are methodical and scholarly. Break down the analysis step by step. Use phrases like \"Let us examine this carefully...\" or \"The statute can be broken down into three key elements...\" You value precision and thoroughness.",
     },
     {
         "id": "empathetic",
         "name": "The Counselor",
         "description": "Warm and approachable — explains in plain language",
-        "voice_id": "ErXwobaYiN019PkySvjV",  # ElevenLabs "Antoni"
+        "voice_id": "ErXwobaYiN019PkySvjV",
+        "persona_prompt": "TONE: You are warm and approachable. Explain legal concepts as if talking to a friend. Use phrases like \"In simple terms, what this means for you is...\" or \"Don't worry, let me walk you through this...\" Prioritize making the law accessible and understandable.",
     },
 ]
+
+# Build a lookup for persona prompts
+PERSONA_PROMPTS = {p["id"]: p["persona_prompt"] for p in VOICE_PRESETS}
 
 
 @router.get("/presets")

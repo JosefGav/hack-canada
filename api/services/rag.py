@@ -30,12 +30,13 @@ CONFIDENCE LEVELS:
 - "low": Excerpts are only tangentially relevant — tell the user the statutes may not cover this topic"""
 
 
-def build_prompt(query: str, sections: list[SectionResult]) -> str:
+def build_prompt(query: str, sections: list[SectionResult], persona: str | None = None) -> str:
     context_blocks = "\n---\n".join(
         f"[{s.law_title} | Section {s.label} | lims_id: {s.lims_id}]\n{s.content_text}"
         for s in sections
     )
-    return f"""{SYSTEM_PROMPT}
+    persona_block = f"\n\n{persona}" if persona else ""
+    return f"""{SYSTEM_PROMPT}{persona_block}
 
 CONTEXT BLOCKS:
 {context_blocks}
@@ -43,8 +44,8 @@ CONTEXT BLOCKS:
 USER QUESTION: {query}"""
 
 
-async def generate_response(query: str, sections: list[SectionResult]) -> dict:
-    prompt = build_prompt(query, sections)
+async def generate_response(query: str, sections: list[SectionResult], persona: str | None = None) -> dict:
+    prompt = build_prompt(query, sections, persona)
     response = model.generate_content(
         prompt, 
         generation_config={"response_mime_type": "application/json"}
@@ -72,8 +73,8 @@ async def generate_response(query: str, sections: list[SectionResult]) -> dict:
     return parsed
 
 
-async def generate_response_stream(query: str, sections: list[SectionResult]):
-    prompt = build_prompt(query, sections)
+async def generate_response_stream(query: str, sections: list[SectionResult], persona: str | None = None):
+    prompt = build_prompt(query, sections, persona)
     response = model.generate_content(
         prompt, 
         stream=True, 

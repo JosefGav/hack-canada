@@ -8,6 +8,7 @@ class QueryRequest(BaseModel):
     language: str = "en"
     law_code: Optional[str] = None
     conversation_id: Optional[str] = None
+    persona: Optional[str] = None
 
 class CitationSchema(BaseModel):
     lims_id: str

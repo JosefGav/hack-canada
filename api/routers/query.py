@@ -3,6 +3,7 @@ from sse_starlette.sse import EventSourceResponse
 from api.db import get_pool
 from api.services.retrieval import hybrid_search
 from api.services.rag import generate_response, generate_response_stream
+from api.routers.voice import PERSONA_PROMPTS
 from api.models.schemas import QueryRequest, QueryResponse
 import json
 
@@ -16,8 +17,10 @@ async def query(req: QueryRequest):
     if not sections:
         return {"answer": None, "reason": "NO_RESULTS", "citations": [], "confidence": "low"}
 
+    persona_prompt = PERSONA_PROMPTS.get(req.persona) if req.persona else None
+
     try:
-        result = await generate_response(req.query, sections)
+        result = await generate_response(req.query, sections, persona=persona_prompt)
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"Gemini API error: {str(e)}")
 
@@ -40,9 +43,11 @@ async def query_stream(req: QueryRequest):
             })}
         return EventSourceResponse(empty())
 
+    persona_prompt = PERSONA_PROMPTS.get(req.persona) if req.persona else None
+
     async def event_generator():
         try:
-            async for event in generate_response_stream(req.query, sections):
+            async for event in generate_response_stream(req.query, sections, persona=persona_prompt):
                 yield {"event": "message", "data": json.dumps(event)}
         except Exception as e:
             yield {"event": "error", "data": json.dumps({"detail": f"Gemini API error: {str(e)}"})}

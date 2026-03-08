@@ -11,8 +11,10 @@ export const useChatStore = create((set, get) => ({
   isAudioPlaying: false,
   audioPlaybackId: 0,
   selectedVoiceId: null,
+  selectedPresetId: null,
 
   setSelectedVoiceId: (voiceId) => set({ selectedVoiceId: voiceId }),
+  setSelectedPresetId: (presetId) => set({ selectedPresetId: presetId }),
 
   addMessage: (msg) => set(state => ({
     messages: [...state.messages, { ...msg, id: Date.now() }]
@@ -108,7 +110,7 @@ export const useChatStore = create((set, get) => ({
       const res = await fetch('/api/query/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query, language: 'en', law_code: lawCode }),
+        body: JSON.stringify({ query, language: 'en', law_code: lawCode, persona: get().selectedPresetId }),
       })
 
       const reader = res.body.getReader()

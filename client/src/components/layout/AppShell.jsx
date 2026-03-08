@@ -6,7 +6,7 @@ import { useChatStore } from '../../stores/chatStore'
 
 export default function AppShell() {
   const [activeTab, setActiveTab] = useState('source')
-  const { isAudioPlaying, stopAudio, setSelectedVoiceId } = useChatStore()
+  const { isAudioPlaying, stopAudio, setSelectedVoiceId, setSelectedPresetId } = useChatStore()
   const [presets, setPresets] = useState([])
   const [activePreset, setActivePreset] = useState('')
 
@@ -18,6 +18,7 @@ export default function AppShell() {
         if (data.presets?.length) {
           setActivePreset(data.presets[0].id)
           setSelectedVoiceId(data.presets[0].voice_id)
+          setSelectedPresetId(data.presets[0].id)
         }
       })
       .catch(() => { })
@@ -26,7 +27,10 @@ export default function AppShell() {
   const handlePresetChange = (presetId) => {
     setActivePreset(presetId)
     const preset = presets.find(p => p.id === presetId)
-    if (preset) setSelectedVoiceId(preset.voice_id)
+    if (preset) {
+      setSelectedVoiceId(preset.voice_id)
+      setSelectedPresetId(preset.id)
+    }
   }
 
   return (
